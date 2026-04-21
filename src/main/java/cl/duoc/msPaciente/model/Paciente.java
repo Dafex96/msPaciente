@@ -1,5 +1,6 @@
 package cl.duoc.msPaciente.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,9 +36,11 @@ public class Paciente {
     @Column(nullable = false)
     private Integer edad;
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL) 
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Contacto contacto;
 
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Direccion direccion;
 }

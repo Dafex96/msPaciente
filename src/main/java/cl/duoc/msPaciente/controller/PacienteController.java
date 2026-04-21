@@ -1,12 +1,13 @@
 package cl.duoc.msPaciente.controller;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import cl.duoc.msPaciente.dto.PacienteDTO;
 import cl.duoc.msPaciente.model.Paciente;
 import cl.duoc.msPaciente.service.PacienteService;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
 @RestController
 @RequestMapping("/api/v1/pacientes")
 public class PacienteController {
 
+    @Autowired
     private PacienteService service;
 
     @GetMapping
@@ -42,7 +45,7 @@ public class PacienteController {
         }
     }
 
-    @GetMapping("/rut/{id}")
+    @GetMapping("/rut/{rut}")
     public ResponseEntity<Paciente> buscarPorRut(@PathVariable String rut){
         try {
             Paciente paciente = service.buscarPorRut(rut);
@@ -78,5 +81,22 @@ public class PacienteController {
         }
     }
 
+    @GetMapping("/dto/{id}")
+    public ResponseEntity<PacienteDTO> buscarDTO(@PathVariable Integer id){
+        try {
+            Paciente paciente = service.buscarPorId(id);
+            
+            PacienteDTO dto = new PacienteDTO();
+
+            dto.setNombre(paciente.getNombre());
+            dto.setApellido(paciente.getApellido());
+            dto.setId(paciente.getId());
+
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 
 }
