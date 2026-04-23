@@ -82,7 +82,7 @@ public class PacienteController {
     }
 
     @GetMapping("/dto/{id}")
-    public ResponseEntity<PacienteDTO> buscarDTO(@PathVariable Integer id){
+    public ResponseEntity<PacienteDTO> obtenerPacienteDTO(@PathVariable Integer id){
         try {
             Paciente paciente = service.buscarPorId(id);
             
